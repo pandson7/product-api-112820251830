@@ -1,0 +1,413 @@
+<h1 id="product-api-system---detailed-aws-cost-analysis">Product API
+System - Detailed AWS Cost Analysis</h1>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>The Product API System is a serverless architecture built on AWS
+using Lambda, API Gateway, and DynamoDB. This analysis provides
+comprehensive cost estimates for different usage scenarios, from
+development to enterprise scale.</p>
+<p><strong>Key Findings:</strong> -
+<strong>Development/Testing</strong>: $0.00/month (within free tier) -
+<strong>Low Production</strong>: $0.05 - $0.15/month - <strong>Medium
+Production</strong>: $2.50 - $5.00/month<br />
+- <strong>High Production</strong>: $25.00 - $50.00/month -
+<strong>Enterprise Scale</strong>: $250.00 - $500.00/month</p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<h3 id="components">Components</h3>
+<ol type="1">
+<li><strong>Amazon API Gateway</strong>: REST API with 2 endpoints
+<ul>
+<li><code>GET /products</code> - List all products</li>
+<li><code>GET /products/{id}</code> - Get specific product</li>
+</ul></li>
+<li><strong>AWS Lambda</strong>: 2 functions with 256MB memory
+<ul>
+<li><code>getProducts</code> - Handles product listing</li>
+<li><code>getProductById</code> - Handles single product retrieval</li>
+</ul></li>
+<li><strong>Amazon DynamoDB</strong>: Single table with on-demand
+billing
+<ul>
+<li>Table: <code>Products</code></li>
+<li>Partition Key: <code>product_id</code></li>
+</ul></li>
+</ol>
+<h2 id="detailed-cost-breakdown-by-service">Detailed Cost Breakdown by
+Service</h2>
+<h3 id="aws-lambda">1. AWS Lambda</h3>
+<p><strong>Pricing Structure:</strong> - Requests: $0.0000002 per
+request - Compute (Tier 1): $0.0000166667 per GB-second (first 6B
+GB-seconds/month) - Compute (Tier 2): $0.0000150000 per GB-second (next
+9B GB-seconds/month) - Compute (Tier 3): $0.0000133334 per GB-second
+(over 15B GB-seconds/month)</p>
+<p><strong>Free Tier:</strong> First 12 months: 1M requests/month +
+400,000 GB-seconds/month</p>
+<p><strong>Usage Scenarios:</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 18%" />
+<col style="width: 11%" />
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Requests/Month</th>
+<th>Duration</th>
+<th>GB-Seconds</th>
+<th>Request Cost</th>
+<th>Compute Cost</th>
+<th>Total Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Development</td>
+<td>1,000</td>
+<td>200ms</td>
+<td>51.2</td>
+<td>$0.0002</td>
+<td>$0.0009</td>
+<td><strong>$0.00</strong> (Free Tier)</td>
+</tr>
+<tr class="even">
+<td>Low Production</td>
+<td>10,000</td>
+<td>200ms</td>
+<td>512</td>
+<td>$0.002</td>
+<td>$0.009</td>
+<td><strong>$0.01</strong></td>
+</tr>
+<tr class="odd">
+<td>Medium Production</td>
+<td>100,000</td>
+<td>200ms</td>
+<td>5,120</td>
+<td>$0.02</td>
+<td>$0.085</td>
+<td><strong>$0.11</strong></td>
+</tr>
+<tr class="even">
+<td>High Production</td>
+<td>1,000,000</td>
+<td>200ms</td>
+<td>51,200</td>
+<td>$0.20</td>
+<td>$0.85</td>
+<td><strong>$1.05</strong></td>
+</tr>
+<tr class="odd">
+<td>Enterprise</td>
+<td>10,000,000</td>
+<td>200ms</td>
+<td>512,000</td>
+<td>$2.00</td>
+<td>$8.53</td>
+<td><strong>$10.53</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="amazon-api-gateway">2. Amazon API Gateway</h3>
+<p><strong>Pricing Structure:</strong> - Tier 1: $0.0000035 per request
+(first 333M requests/month) - Tier 2: $0.0000028 per request (next 667M
+requests/month) - Tier 3: $0.0000238 per request (next 19B
+requests/month) - Tier 4: $0.0000151 per request (over 20B
+requests/month)</p>
+<p><strong>Free Tier:</strong> First 12 months: 1M API calls/month</p>
+<p><strong>Usage Scenarios:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Requests/Month</th>
+<th>Tier</th>
+<th>Unit Price</th>
+<th>Total Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Development</td>
+<td>1,000</td>
+<td>Free Tier</td>
+<td>$0.00</td>
+<td><strong>$0.00</strong></td>
+</tr>
+<tr class="even">
+<td>Low Production</td>
+<td>10,000</td>
+<td>Free Tier</td>
+<td>$0.00</td>
+<td><strong>$0.00</strong></td>
+</tr>
+<tr class="odd">
+<td>Medium Production</td>
+<td>100,000</td>
+<td>Free Tier</td>
+<td>$0.00</td>
+<td><strong>$0.00</strong></td>
+</tr>
+<tr class="even">
+<td>High Production</td>
+<td>1,000,000</td>
+<td>Free Tier</td>
+<td>$0.00</td>
+<td><strong>$0.00</strong></td>
+</tr>
+<tr class="odd">
+<td>Enterprise</td>
+<td>10,000,000</td>
+<td>Tier 1</td>
+<td>$0.0000035</td>
+<td><strong>$35.00</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="amazon-dynamodb">3. Amazon DynamoDB</h3>
+<p><strong>Pricing Structure:</strong> - Read Request Units:
+$0.000000125 per RRU ($0.125 per million) - Write Request Units:
+$0.000000625 per WRU ($0.625 per million) - Storage: $0.00 for first
+25GB, $0.25/GB-month beyond</p>
+<p><strong>Free Tier:</strong> Always free: 25 GB storage + 25 WRU + 25
+RRU per month</p>
+<p><strong>Usage Scenarios:</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Read Ops</th>
+<th>Write Ops</th>
+<th>Storage (GB)</th>
+<th>RRU Cost</th>
+<th>WRU Cost</th>
+<th>Storage Cost</th>
+<th>Total Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Development</td>
+<td>5,000</td>
+<td>500</td>
+<td>1</td>
+<td>$0.0006</td>
+<td>$0.0003</td>
+<td>$0.00</td>
+<td><strong>$0.00</strong> (Free Tier)</td>
+</tr>
+<tr class="even">
+<td>Low Production</td>
+<td>50,000</td>
+<td>5,000</td>
+<td>5</td>
+<td>$0.006</td>
+<td>$0.003</td>
+<td>$0.00</td>
+<td><strong>$0.01</strong></td>
+</tr>
+<tr class="odd">
+<td>Medium Production</td>
+<td>500,000</td>
+<td>50,000</td>
+<td>10</td>
+<td>$0.063</td>
+<td>$0.031</td>
+<td>$0.00</td>
+<td><strong>$0.09</strong></td>
+</tr>
+<tr class="even">
+<td>High Production</td>
+<td>5,000,000</td>
+<td>500,000</td>
+<td>50</td>
+<td>$0.625</td>
+<td>$0.313</td>
+<td>$6.25</td>
+<td><strong>$7.19</strong></td>
+</tr>
+<tr class="odd">
+<td>Enterprise</td>
+<td>50,000,000</td>
+<td>5,000,000</td>
+<td>200</td>
+<td>$6.25</td>
+<td>$3.13</td>
+<td>$43.75</td>
+<td><strong>$53.13</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="total-cost-summary-by-scenario">Total Cost Summary by
+Scenario</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Lambda</th>
+<th>API Gateway</th>
+<th>DynamoDB</th>
+<th><strong>Total Monthly Cost</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Development</td>
+<td>$0.00</td>
+<td>$0.00</td>
+<td>$0.00</td>
+<td><strong>$0.00</strong></td>
+</tr>
+<tr class="even">
+<td>Low Production</td>
+<td>$0.01</td>
+<td>$0.00</td>
+<td>$0.01</td>
+<td><strong>$0.02</strong></td>
+</tr>
+<tr class="odd">
+<td>Medium Production</td>
+<td>$0.11</td>
+<td>$0.00</td>
+<td>$0.09</td>
+<td><strong>$0.20</strong></td>
+</tr>
+<tr class="even">
+<td>High Production</td>
+<td>$1.05</td>
+<td>$0.00</td>
+<td>$7.19</td>
+<td><strong>$8.24</strong></td>
+</tr>
+<tr class="odd">
+<td>Enterprise</td>
+<td>$10.53</td>
+<td>$35.00</td>
+<td>$53.13</td>
+<td><strong>$98.66</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cost-optimization-strategies">Cost Optimization Strategies</h2>
+<h3 id="immediate-actions">Immediate Actions</h3>
+<ol type="1">
+<li><strong>Start with Free Tier</strong>: Leverage 12-month free tier
+for API Gateway and Lambda</li>
+<li><strong>Monitor Usage</strong>: Use AWS Cost Explorer and CloudWatch
+for tracking</li>
+<li><strong>Optimize Queries</strong>: Implement efficient DynamoDB
+access patterns</li>
+<li><strong>Right-size Functions</strong>: Monitor Lambda memory usage
+and adjust accordingly</li>
+</ol>
+<h3 id="medium-term-optimizations">Medium-term Optimizations</h3>
+<ol type="1">
+<li><strong>API Caching</strong>: Implement API Gateway caching for
+frequently accessed data</li>
+<li><strong>Lambda Optimization</strong>:
+<ul>
+<li>Optimize function code for faster execution</li>
+<li>Consider ARM-based Graviton2 processors for 20% cost savings</li>
+</ul></li>
+<li><strong>DynamoDB Optimization</strong>:
+<ul>
+<li>Use single-table design patterns</li>
+<li>Implement pagination for large result sets</li>
+<li>Consider Global Secondary Indexes (GSI) carefully</li>
+</ul></li>
+</ol>
+<h3 id="long-term-strategies">Long-term Strategies</h3>
+<ol type="1">
+<li><strong>Reserved Capacity</strong>: For predictable workloads,
+consider DynamoDB reserved capacity</li>
+<li><strong>Provisioned Concurrency</strong>: For consistent performance
+requirements</li>
+<li><strong>Multi-region</strong>: Plan for disaster recovery and global
+distribution</li>
+<li><strong>Monitoring &amp; Alerting</strong>: Implement cost anomaly
+detection</li>
+</ol>
+<h2 id="risk-factors-considerations">Risk Factors &amp;
+Considerations</h2>
+<h3 id="cost-risks">Cost Risks</h3>
+<ul>
+<li><strong>Traffic Spikes</strong>: Sudden increases in API calls can
+significantly impact costs</li>
+<li><strong>Data Growth</strong>: DynamoDB storage costs scale linearly
+with data size</li>
+<li><strong>Inefficient Queries</strong>: Poor query patterns can
+increase RRU/WRU consumption</li>
+</ul>
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+<ul>
+<li><strong>Rate Limiting</strong>: Implement API throttling to prevent
+abuse</li>
+<li><strong>Circuit Breakers</strong>: Add fault tolerance to prevent
+cascading failures</li>
+<li><strong>Cost Alerts</strong>: Set up billing alerts for unexpected
+cost increases</li>
+<li><strong>Load Testing</strong>: Regular performance testing to
+understand scaling behavior</li>
+</ul>
+<h2 id="recommendations-by-business-stage">Recommendations by Business
+Stage</h2>
+<h3 id="startupmvp-0-1k-users">Startup/MVP (0-1K users)</h3>
+<ul>
+<li><strong>Budget</strong>: $0-5/month</li>
+<li><strong>Strategy</strong>: Maximize free tier usage</li>
+<li><strong>Focus</strong>: Functionality over optimization</li>
+</ul>
+<h3 id="growth-stage-1k-10k-users">Growth Stage (1K-10K users)</h3>
+<ul>
+<li><strong>Budget</strong>: $5-50/month<br />
+</li>
+<li><strong>Strategy</strong>: Monitor and optimize based on usage
+patterns</li>
+<li><strong>Focus</strong>: Performance optimization and cost
+monitoring</li>
+</ul>
+<h3 id="scale-stage-10k-100k-users">Scale Stage (10K-100K users)</h3>
+<ul>
+<li><strong>Budget</strong>: $50-500/month</li>
+<li><strong>Strategy</strong>: Consider reserved capacity and advanced
+optimizations</li>
+<li><strong>Focus</strong>: Reliability, performance, and cost
+efficiency</li>
+</ul>
+<h3 id="enterprise-100k-users">Enterprise (100K+ users)</h3>
+<ul>
+<li><strong>Budget</strong>: $500+/month</li>
+<li><strong>Strategy</strong>: Full optimization suite with dedicated
+support</li>
+<li><strong>Focus</strong>: Multi-region, disaster recovery, and
+enterprise features</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Product API System offers excellent cost efficiency for
+serverless workloads, with the ability to start at $0/month and scale
+cost-effectively. The key to cost optimization is:</p>
+<ol type="1">
+<li><strong>Start Simple</strong>: Use on-demand pricing initially</li>
+<li><strong>Monitor Continuously</strong>: Track usage patterns and
+costs</li>
+<li><strong>Optimize Iteratively</strong>: Apply optimizations based on
+actual usage data</li>
+<li><strong>Plan for Scale</strong>: Consider reserved capacity for
+predictable workloads</li>
+</ol>
+<p>Regular review and adjustment of the architecture based on actual
+usage patterns will ensure optimal cost efficiency as the system
+grows.</p>
